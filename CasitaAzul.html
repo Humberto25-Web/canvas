@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<style>
+	.divPrincipal{
+		 text-align: center;
+	}
+	.div{
+		background-color: yellow;
+	  	padding: 10px;
+	  	margin: 10px;
+	  
+	    /* IMPORTANTE */
+	    display: inline-block;
+	}
+</style>
+<body>
+	<form action="" name="f1">
+		<div class="divPrincipal">
+		<div class="div">
+		<label >Elige el color de la casa</label><br>
+		<input type="radio" name="col"  value="Rojo" onclick="rojo()">Rojo 
+		<input type="radio" name="col" value="Azul" onclick="cambiar()">Azul <br>
+		<input type="radio" name="col" value="Verde" onclick="cambiar()">Verde 
+		<input type="radio" name="col" value="Amarillo" onclick="cambiar()">Amarrillo
+		</div >
+		<div class="div">
+			<label >Selecciona que objeto desea mostrar o quitar</label><br>
+			<input type="checkBox" name="check" id="1" onclick="mostrar()" checked>Sol 
+			<input type="checkBox" name="check" id="2" onclick="mostrar()" checked>Ventana 
+			<input type="checkBox" name="check" id="3" onclick="mostrar()" checked>Casa 
+			<input type="checkBox" name="check" id="4" onclick="mostrar()" checked>Techo <br>
+			<input type="checkBox" name="check" id="5" onclick="mostrar()" checked>Pasto 
+			<input type="checkBox" name="check" id="6" onclick="mostrar()" checked>Cielo 
+		</div>
+				
+		</div>
+		
+	</form>
+	<div class="conteiner" align="center">
+	<canvas id="lienzo" width="500px" height="400px" 
+	style="border: 2px solid green">Tu navegador no soporta Canvas</canvas>
+	</div>
+
+	<script type="text/javascript">
+
+		var lienzo=document.getElementById('lienzo');
+		var c=lienzo.getContext("2d");
+		//Cielo
+		c.beginPath();
+		c.moveTo(0,0);
+		c.lineTo(500,0);
+		c.lineTo(500,250);
+		c.lineTo(0,250);
+		c.closePath();
+		c.fillStyle='#3CBCFE';
+		c.strokeStyle='black';
+		c.fill();
+		c.stroke();
+		//resplandor sol
+		drawStar(115,105,20,100,50,'#FBEB03','#FBA003',0)
+
+		//Sol arc exterior
+		c.beginPath();
+		c.arc(115,105,56,0,2*Math.PI);
+		c.fillStyle="white";
+		c.fill();
+		c.stroke();
+
+		//Sol arc interior
+		c.beginPath();
+		c.arc(115,105,50,0,2*Math.PI);
+		c.fillStyle="orange";
+		c.fill();
+		c.stroke();
+
+		//Fondo
+		/*c.beginPath();
+		c.moveTo(54,150);
+		c.lineTo(240,20);
+		c.lineTo(240,310);
+		c.lineTo(54,310);
+		
+		c.closePath();
+		c.fillStyle='#3CBCFE';
+		c.strokeStyle='#3CBCFE';
+		c.fill();
+		c.stroke();*/
+
+		//pasto
+		c.beginPath();
+		c.moveTo(0,250);
+		c.lineTo(500,250);
+		c.lineTo(500,400);
+		c.lineTo(0,400);
+		c.closePath();
+		c.fillStyle='#05D944';
+		c.strokeStyle='black';
+		c.fill();
+		c.stroke();
+		//Casita
+		c.beginPath();
+		c.moveTo(84,300);
+		c.lineTo(84,150);
+		c.lineTo(240,50);
+		c.lineTo(396,150);
+		c.lineTo(396,300);
+		//c.bezierCurveTo(210,240,156,288,84,174);
+		c.closePath();
+		c.fillStyle='grey';
+		c.strokeStyle='black'
+		c.fill();
+		c.stroke();
+		
+				//Techo
+		c.beginPath();
+		c.moveTo(74,150);
+		c.lineTo(54,150);
+		c.lineTo(240,20);
+		c.lineTo(430,150);
+		c.lineTo(410,150);
+		c.lineTo(240,40);
+		
+		c.closePath();
+		c.fillStyle='grey';
+		c.strokeStyle='black';
+		c.fill();
+		c.stroke();
+
+		//ventana
+		c.beginPath();
+		c.moveTo(170,160);
+		c.lineTo(170,160);
+		c.lineTo(310,160);
+		c.lineTo(310,260);
+		c.lineTo(170,260);
+		c.closePath();
+		c.fillStyle='white';
+		c.strokeStyle='red'
+		c.fill();
+		c.stroke();
+
+		c.beginPath();
+		c.moveTo(170,200);
+		c.lineTo(170,210);
+		c.lineTo(310,210);
+		c.lineTo(310,200);
+
+		c.closePath();
+		c.fillStyle='blue';
+		c.strokeStyle='black';
+		c.fill();
+		c.stroke();
+
+		c.beginPath();
+		c.moveTo(235,160);
+		c.lineTo(245,160);
+		c.lineTo(245,260);
+		c.lineTo(235,260);
+		c.closePath();
+		c.fillStyle='blue';
+		c.strokeStyle='black';
+		c.fill();
+		c.stroke();
+
+		function mostrar(){
+			c.clearRect(0, 0, 500, 400);
+			//Pasto
+			if (document.getElementById("5").checked == true) {
+			//pasto
+					c.beginPath();
+					c.moveTo(0,250);
+					c.lineTo(500,250);
+					c.lineTo(500,400);
+					c.lineTo(0,400);
+					c.closePath();
+					c.fillStyle='#05D944';
+					c.strokeStyle='black';
+					c.fill();
+					c.stroke();
+			}
+			//Cielo
+			if (document.getElementById("6").checked == true) {
+					//Cielo
+				c.beginPath();
+				c.moveTo(0,0);
+				c.lineTo(500,0);
+				c.lineTo(500,250);
+				c.lineTo(0,250);
+				c.closePath();
+				c.fillStyle='#3CBCFE';
+				c.strokeStyle='black';
+				c.fill();
+				c.stroke();
+			}
+			if (document.getElementById("1").checked == true) {
+				//resplandor sol
+				drawStar(115,105,20,100,50,'#FBEB03','#FBA003',0)
+
+				//Sol arc exterior
+				c.beginPath();
+				c.arc(115,105,56,0,2*Math.PI);
+				c.fillStyle="white";
+				c.fill();
+				c.stroke();
+
+				//Sol arc interior
+				c.beginPath();
+				c.arc(115,105,50,0,2*Math.PI);
+				c.fillStyle="orange";
+				c.fill();
+				c.stroke();
+
+			}
+			
+			if (document.getElementById("3").checked == true) {
+				//Casita
+				c.beginPath();
+				c.moveTo(84,300);
+				c.lineTo(84,150);
+				c.lineTo(240,50);
+				c.lineTo(396,150);
+				c.lineTo(396,300);
+				//c.bezierCurveTo(210,240,156,288,84,174);
+				c.closePath();
+				c.fillStyle='grey';
+				c.strokeStyle='black'
+				c.fill();
+				c.stroke();
+		
+			}
+			if (document.getElementById("2").checked == true) {
+				//ventana
+				c.beginPath();
+				c.moveTo(170,160);
+				c.lineTo(170,160);
+				c.lineTo(310,160);
+				c.lineTo(310,260);
+				c.lineTo(170,260);
+				c.closePath();
+				c.fillStyle='white';
+				c.strokeStyle='red'
+				c.fill();
+				c.stroke();
+
+
+				c.beginPath();
+				c.moveTo(170,200);
+				c.lineTo(170,210);
+				c.lineTo(310,210);
+				c.lineTo(310,200);
+
+				c.closePath();
+				c.fillStyle='blue';
+				c.strokeStyle='black';
+				c.fill();
+				c.stroke();
+
+				c.beginPath();
+				c.moveTo(235,160);
+				c.lineTo(245,160);
+				c.lineTo(245,260);
+				c.lineTo(235,260);
+				c.closePath();
+				c.fillStyle='blue';
+				c.strokeStyle='black';
+				c.fill();
+				c.stroke();
+			}
+			if (document.getElementById("4").checked == true) {
+				//Techo
+				c.beginPath();
+				c.moveTo(74,150);
+				c.lineTo(54,150);
+				c.lineTo(240,20);
+				c.lineTo(430,150);
+				c.lineTo(410,150);
+				c.lineTo(240,40);
+				
+				c.closePath();
+				c.fillStyle='grey';
+				c.strokeStyle='black';
+				c.fill();
+				c.stroke();
+		
+			}
+
+	}
+
+	function rojo(){
+		//Casita
+		c.beginPath();
+		c.moveTo(84,300);
+		c.lineTo(84,150);
+		c.lineTo(240,50);
+		c.lineTo(396,150);
+		c.lineTo(396,300);
+		//c.bezierCurveTo(210,240,156,288,84,174);
+		c.closePath();
+		c.fillStyle='red';
+		c.strokeStyle='black'
+		c.fill();
+		c.stroke();
+		
+		
+		//ventana
+		c.beginPath();
+		c.moveTo(170,160);
+		c.lineTo(170,160);
+		c.lineTo(310,160);
+		c.lineTo(310,260);
+		c.lineTo(170,260);
+		c.closePath();
+		c.fillStyle='white';
+		c.strokeStyle='red'
+		c.fill();
+		c.stroke();
+
+
+		c.beginPath();
+		c.moveTo(170,200);
+		c.lineTo(170,210);
+		c.lineTo(310,210);
+		c.lineTo(310,200);
+
+		c.closePath();
+		c.fillStyle='blue';
+		c.strokeStyle='black';
+		c.fill();
+		c.stroke();
+
+		c.beginPath();
+		c.moveTo(235,160);
+		c.lineTo(245,160);
+		c.lineTo(245,260);
+		c.lineTo(235,260);
+		c.closePath();
+		c.fillStyle='blue';
+		c.strokeStyle='black';
+		c.fill();
+		c.stroke();
+	}
+	function azul(){
+			//Casita
+				c.beginPath();
+				c.moveTo(84,300);
+				c.lineTo(84,150);
+				c.lineTo(240,50);
+				c.lineTo(396,150);
+				c.lineTo(396,300);
+				//c.bezierCurveTo(210,240,156,288,84,174);
+				c.closePath();
+				c.fillStyle='blue';
+				c.strokeStyle='black'
+				c.fill();
+				c.stroke();
+		
+		
+		//ventana
+		c.beginPath();
+		c.moveTo(170,160);
+		c.lineTo(170,160);
+		c.lineTo(310,160);
+		c.lineTo(310,260);
+		c.lineTo(170,260);
+		c.closePath();
+		c.fillStyle='white';
+		c.strokeStyle='red'
+		c.fill();
+		c.stroke();
+
+
+		c.beginPath();
+		c.moveTo(170,200);
+		c.lineTo(170,210);
+		c.lineTo(310,210);
+		c.lineTo(310,200);
+
+		c.closePath();
+		c.fillStyle='blue';
+		c.strokeStyle='black';
+		c.fill();
+		c.stroke();
+
+		c.beginPath();
+		c.moveTo(235,160);
+		c.lineTo(245,160);
+		c.lineTo(245,260);
+		c.lineTo(235,260);
+		c.closePath();
+		c.fillStyle='blue';
+		c.strokeStyle='black';
+		c.fill();
+		c.stroke();
+	}
+	function verde(){
+			//Casita
+				c.beginPath();
+				c.moveTo(84,300);
+				c.lineTo(84,150);
+				c.lineTo(240,50);
+				c.lineTo(396,150);
+				c.lineTo(396,300);
+				//c.bezierCurveTo(210,240,156,288,84,174);
+				c.closePath();
+				c.fillStyle='green';
+				c.strokeStyle='black'
+				c.fill();
+				c.stroke();
+		
+		
+		//ventana
+		c.beginPath();
+		c.moveTo(170,160);
+		c.lineTo(170,160);
+		c.lineTo(310,160);
+		c.lineTo(310,260);
+		c.lineTo(170,260);
+		c.closePath();
+		c.fillStyle='white';
+		c.strokeStyle='red'
+		c.fill();
+		c.stroke();
+
+
+		c.beginPath();
+		c.moveTo(170,200);
+		c.lineTo(170,210);
+		c.lineTo(310,210);
+		c.lineTo(310,200);
+
+		c.closePath();
+		c.fillStyle='blue';
+		c.strokeStyle='black';
+		c.fill();
+		c.stroke();
+
+		c.beginPath();
+		c.moveTo(235,160);
+		c.lineTo(245,160);
+		c.lineTo(245,260);
+		c.lineTo(235,260);
+		c.closePath();
+		c.fillStyle='blue';
+		c.strokeStyle='black';
+		c.fill();
+		c.stroke();
+	}
+ 	function amarillo(){
+			//Casita
+				c.beginPath();
+				c.moveTo(84,300);
+				c.lineTo(84,150);
+				c.lineTo(240,50);
+				c.lineTo(396,150);
+				c.lineTo(396,300);
+				//c.bezierCurveTo(210,240,156,288,84,174);
+				c.closePath();
+				c.fillStyle='yellow';
+				c.strokeStyle='black'
+				c.fill();
+				c.stroke();
+		
+		
+		//ventana
+		c.beginPath();
+		c.moveTo(170,160);
+		c.lineTo(170,160);
+		c.lineTo(310,160);
+		c.lineTo(310,260);
+		c.lineTo(170,260);
+		c.closePath();
+		c.fillStyle='white';
+		c.strokeStyle='red'
+		c.fill();
+		c.stroke();
+
+
+		c.beginPath();
+		c.moveTo(170,200);
+		c.lineTo(170,210);
+		c.lineTo(310,210);
+		c.lineTo(310,200);
+
+		c.closePath();
+		c.fillStyle='blue';
+		c.strokeStyle='black';
+		c.fill();
+		c.stroke();
+
+		c.beginPath();
+		c.moveTo(235,160);
+		c.lineTo(245,160);
+		c.lineTo(245,260);
+		c.lineTo(235,260);
+		c.closePath();
+		c.fillStyle='blue';
+		c.strokeStyle='black';
+		c.fill();
+		c.stroke();
+	}
+
+
+		
+		function cambiar(){
+			
+			for (var i = 0; i < document.f1.col.length; i++) {
+				if (document.f1.col[i].checked) {
+					valor=document.f1.col[i].value;	
+					if(valor=='Rojo'){
+						rojo();
+					}
+					if(valor=='Azul'){
+						azul();
+					}
+					if(valor=='Verde'){
+						verde();
+					}
+					if(valor=='Amarillo'){
+						amarillo();
+					}	
+				}
+						
+			}	
+
+		}
+
+
+		function drawStar(centerX,centerY,points,outer,inner,fill,stroke,line) {
+			c.beginPath();
+			c.moveTo(centerX,centerY+outer);
+			for (var i = 0; i<2*points+1; i++) {
+				var b=(i % 2 == 0)? outer: inner;
+				var a= Math.PI * i/points;
+				c.lineTo(centerX + b *	Math.sin(a),centerY + b * Math.cos(a));
+			};
+			c.closePath();
+			c.fillStyle=fill;
+			c.fill();
+			c.strokeStyle=stroke;
+			c.lineWidth=line;
+			c.stroke();
+		}
+	</script>
+</body>
+
+</html>
